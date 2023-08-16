@@ -1,9 +1,7 @@
 package com.example.board.wantedpreonboardingbackend.service;
 
 import com.example.board.wantedpreonboardingbackend.dao.PostDAO;
-import com.example.board.wantedpreonboardingbackend.dto.InsertPostDTO;
-import com.example.board.wantedpreonboardingbackend.dto.InsertedPostDTO;
-import com.example.board.wantedpreonboardingbackend.dto.LoadedPostDTO;
+import com.example.board.wantedpreonboardingbackend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +30,10 @@ public class PostServiceImpl implements PostService{
     @Override
     public LoadedPostDTO getPost(Long id) {
         return postDAO.findPost(id);
+    }
+
+    @Override
+    public UpdatedPostDTO updatePost(Long id, UpdatePostDTO updatePostDTO) {
+        return postDAO.updatePost(id, updatePostDTO);
     }
 }
