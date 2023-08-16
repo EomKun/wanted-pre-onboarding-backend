@@ -1,13 +1,30 @@
 package com.example.board.wantedpreonboardingbackend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.board.wantedpreonboardingbackend.dto.InsertPostDTO;
+import com.example.board.wantedpreonboardingbackend.dto.InsertedPostDTO;
+import com.example.board.wantedpreonboardingbackend.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/board")
 public class BoardController {
-    @GetMapping("/test")
-    public String Hello() {
-        return "Hello, world!";
+    private final PostService postService;
+
+    @Autowired
+    public BoardController(PostService postService) {
+        this.postService = postService;
+    }
+
+    @PostMapping("/post")
+    public ResponseEntity<InsertedPostDTO> createPost(@RequestBody @Valid InsertPostDTO insertPostDTO) {
+        InsertedPostDTO insertedPostDTO = postService.insertPost(insertPostDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(insertedPostDTO);
     }
 
     /**
