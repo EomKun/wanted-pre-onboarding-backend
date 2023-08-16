@@ -9,4 +9,5 @@ import java.util.List;
 public interface PostDAO {
     InsertedPostDTO insertPost(InsertPostDTO insertPostDTO);
     List<LoadedPostDTO> findAllPost(int page);
+    LoadedPostDTO findPost(Long id);
 }

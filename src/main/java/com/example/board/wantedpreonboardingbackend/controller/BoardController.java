@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -26,6 +25,9 @@ public class BoardController {
         this.postService = postService;
     }
 
+    /**
+     * 게시물 등록 Request - Response
+     */
     @PostMapping("/post")
     public ResponseEntity<InsertedPostDTO> createPost(@RequestBody @Valid InsertPostDTO insertPostDTO) {
         InsertedPostDTO insertedPostDTO = postService.insertPost(insertPostDTO);
@@ -33,6 +35,9 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.OK).body(insertedPostDTO);
     }
 
+    /**
+     * 게시물 목록 조희 Request - Response
+     */
     @GetMapping("/post")
     public ResponseEntity<List<LoadedPostDTO>> getAllPost(
             @RequestParam
@@ -41,6 +46,19 @@ public class BoardController {
         List<LoadedPostDTO> postList = postService.getAllPost(page);
 
         return ResponseEntity.status(HttpStatus.OK).body(postList);
+    }
+
+    /**
+     * id 기반 게시물 조회 Request - Response
+     */
+    @GetMapping("/post/{id}")
+    public ResponseEntity<LoadedPostDTO> getPost(
+            @PathVariable("id")
+            @Min(value = 1, message = "id value must be greater than or equal to 1")
+            Long id) {
+        LoadedPostDTO post = postService.getPost(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(post);
     }
 
     /**

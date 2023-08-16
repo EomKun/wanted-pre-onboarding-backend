@@ -42,4 +42,12 @@ public class PostDAOImpl implements PostDAO {
         return postPage.map((p) -> new LoadedPostDTO(p.getId(), p.getTitle(), p.getContent(),
                 p.getWriter(), p.getViews(), p.getCreatedDt())).toList();
     }
+
+    @Override
+    public LoadedPostDTO findPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("[id : " + id + "] There are no posts matching the id"));
+
+        return new LoadedPostDTO(post.getId(), post.getTitle(), post.getContent(),
+                post.getWriter(), post.getViews(), post.getCreatedDt());
+    }
 }

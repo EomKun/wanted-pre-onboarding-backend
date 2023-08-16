@@ -28,4 +28,9 @@ public class PostServiceImpl implements PostService{
     public List<LoadedPostDTO> getAllPost(int page) {
         return postDAO.findAllPost(page);
     }
+
+    @Override
+    public LoadedPostDTO getPost(Long id) {
+        return postDAO.findPost(id);
+    }
 }

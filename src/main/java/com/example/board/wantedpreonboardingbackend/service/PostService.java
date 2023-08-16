@@ -9,4 +9,5 @@ import java.util.List;
 public interface PostService {
     InsertedPostDTO insertPost(InsertPostDTO insertPostDTO);
     List<LoadedPostDTO> getAllPost(int page);
+    LoadedPostDTO getPost(Long id);
 }
