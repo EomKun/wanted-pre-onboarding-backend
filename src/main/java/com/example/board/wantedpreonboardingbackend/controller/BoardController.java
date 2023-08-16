@@ -1,8 +1,6 @@
 package com.example.board.wantedpreonboardingbackend.controller;
 
-import com.example.board.wantedpreonboardingbackend.dto.InsertPostDTO;
-import com.example.board.wantedpreonboardingbackend.dto.InsertedPostDTO;
-import com.example.board.wantedpreonboardingbackend.dto.LoadedPostDTO;
+import com.example.board.wantedpreonboardingbackend.dto.*;
 import com.example.board.wantedpreonboardingbackend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,6 +57,15 @@ public class BoardController {
         LoadedPostDTO post = postService.getPost(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(post);
+    }
+
+    @PutMapping("/post/{id}")
+    public ResponseEntity<UpdatedPostDTO> updatePost(
+            @PathVariable("id") @Min(value = 1, message = "id value must be greater than or equal to 1") Long id,
+            @RequestBody @Valid UpdatePostDTO updatePostDTO) {
+        UpdatedPostDTO updatedPostDTO = postService.updatePost(id, updatePostDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedPostDTO);
     }
 
     /**

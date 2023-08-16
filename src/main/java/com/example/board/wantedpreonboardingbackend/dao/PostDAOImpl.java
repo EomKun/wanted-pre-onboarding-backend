@@ -1,14 +1,14 @@
 package com.example.board.wantedpreonboardingbackend.dao;
 
-import com.example.board.wantedpreonboardingbackend.dto.InsertPostDTO;
-import com.example.board.wantedpreonboardingbackend.dto.InsertedPostDTO;
-import com.example.board.wantedpreonboardingbackend.dto.LoadedPostDTO;
+import com.example.board.wantedpreonboardingbackend.dto.*;
 import com.example.board.wantedpreonboardingbackend.entity.Post;
 import com.example.board.wantedpreonboardingbackend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Component
@@ -49,5 +49,18 @@ public class PostDAOImpl implements PostDAO {
 
         return new LoadedPostDTO(post.getId(), post.getTitle(), post.getContent(),
                 post.getWriter(), post.getViews(), post.getCreatedDt());
+    }
+
+    @Override
+    public UpdatedPostDTO updatePost(Long id, UpdatePostDTO updatePostDTO) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("[id : " + id + "] There are no posts matching the id"));
+        if(updatePostDTO.getTitle() != null && !updatePostDTO.getTitle().isBlank()) post.setTitle(updatePostDTO.getTitle());
+        if(updatePostDTO.getContent() != null && !updatePostDTO.getContent().isBlank()) post.setContent(updatePostDTO.getContent());
+        if(updatePostDTO.getAttach() != null && !updatePostDTO.getAttach().isBlank()) post.setAttach(updatePostDTO.getAttach());
+        post.setUpdatedDt(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        postRepository.save(post);
+
+        return new UpdatedPostDTO(post.getTitle(), post.getContent(),
+                post.getWriter(), post.getAttach(), post.getViews(), post.getUpdatedDt());
     }
 }
