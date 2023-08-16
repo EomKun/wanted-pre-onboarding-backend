@@ -41,11 +41,11 @@ public class Post {
 
     @Column(nullable = false)
     @CreationTimestamp
-    private LocalDateTime CreatedDt;
+    private LocalDateTime createdDt;
 
     @Column(nullable = false)
     @UpdateTimestamp
-    private LocalDateTime UpdatedDt;
+    private LocalDateTime updatedDt;
 
     @Column(nullable = false)
     private boolean isDeleted;
@@ -91,15 +91,15 @@ public class Post {
     }
 
     public LocalDateTime getCreatedDt() {
-        return CreatedDt;
+        return createdDt;
     }
 
     public LocalDateTime getUpdatedDt() {
-        return UpdatedDt;
+        return updatedDt;
     }
 
     public void setUpdatedDt(LocalDateTime updatedDt) {
-        this.UpdatedDt = updatedDt;
+        this.updatedDt = updatedDt;
     }
 
     public boolean isDeleted() {
