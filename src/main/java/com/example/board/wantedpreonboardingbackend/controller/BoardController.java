@@ -2,16 +2,22 @@ package com.example.board.wantedpreonboardingbackend.controller;
 
 import com.example.board.wantedpreonboardingbackend.dto.InsertPostDTO;
 import com.example.board.wantedpreonboardingbackend.dto.InsertedPostDTO;
+import com.example.board.wantedpreonboardingbackend.dto.LoadedPostDTO;
 import com.example.board.wantedpreonboardingbackend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @RestController
 @RequestMapping("/board")
+@Validated
 public class BoardController {
     private final PostService postService;
 
@@ -25,6 +31,16 @@ public class BoardController {
         InsertedPostDTO insertedPostDTO = postService.insertPost(insertPostDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(insertedPostDTO);
+    }
+
+    @GetMapping("/post")
+    public ResponseEntity<List<LoadedPostDTO>> getAllPost(
+            @RequestParam
+            @Min(value = 1, message = "page value must be greater than or equal to 1")
+            Integer page) {
+        List<LoadedPostDTO> postList = postService.getAllPost(page);
+
+        return ResponseEntity.status(HttpStatus.OK).body(postList);
     }
 
     /**
